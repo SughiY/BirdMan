@@ -23,11 +23,12 @@ public class MainController implements AbstractController {
     }
 
     private void initUILayout() {
-
+        mFrame.setDefaultCloseOperation(1);
         mFrame.setLayout(new GridLayout(0, 2));
         mFrame.setSize(Constants.FRAME_WIDTH, Constants.FRAME_HEIGHT);
         addSubController(userSettingsController);
         addSubController(canvasController);
+        userSettingsController.addActionListener(canvasController);
     }
 
     @Override

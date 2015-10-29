@@ -7,25 +7,22 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 
 /**
  * Created by user on 15/10/28.
  */
 public class ImageComponent extends JComponent {
 
-    private BufferedImage image;
+    private ImageIcon image;
 
-    public ImageComponent(String path) {
-        try {
-            image = ImageIO.read(new File(path));
-        } catch (IOException ex) {
-            // handle exception...
-        }
+    public ImageComponent(URL path) {
+            image = new ImageIcon(path);
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(image, 0, 0, null);
+        g.drawImage(image.getImage(), 0, 0, getWidth(), getHeight(),null);
     }
 }

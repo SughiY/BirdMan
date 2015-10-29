@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.image.ImageObserver;
 import java.awt.image.ImageProducer;
+import java.net.URL;
 
 /**
  * Created by user on 15/10/28.
@@ -19,7 +20,7 @@ public class AnimatedImage extends ImageComponent implements AnimationComponent{
     private JPanel mContainer;
     private Change mCallback;
 
-    public AnimatedImage(String path) {
+    public AnimatedImage(URL path) {
         super(path);
     }
 
