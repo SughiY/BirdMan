@@ -16,7 +16,9 @@ public interface AnimationComponent extends ActionListener{
     JPanel mContainer = null;
     Timer mTimer = null;
 
-    public void startAnimation();
+    public void startAnimation(int delay);
+    public void stopAnimation();
+    public void reStartAnimation();
 
     /**
      * @description should always use this method to add to its container.

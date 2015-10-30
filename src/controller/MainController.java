@@ -13,8 +13,8 @@ public class MainController implements AbstractController {
 
     private Component          mComponent;
     private AbstractController mParentController;
-    private       CanvasController       canvasController       = new CanvasController();
     private       UserSettingsController userSettingsController = new UserSettingsController();
+    private       CanvasController       canvasController       = new CanvasController();
     final private BirdManFrame           mFrame                 = new BirdManFrame();
 
     public MainController() {

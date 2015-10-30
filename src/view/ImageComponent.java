@@ -16,8 +16,8 @@ public class ImageComponent extends JComponent {
 
     private ImageIcon image;
 
-    public ImageComponent(URL path) {
-            image = new ImageIcon(path);
+    public ImageComponent(String path) {
+            image = new ImageIcon(getClass().getClassLoader().getResource(path));
     }
 
     @Override

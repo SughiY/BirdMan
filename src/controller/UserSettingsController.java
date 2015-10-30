@@ -1,9 +1,12 @@
 package controller;
 
+import main.Constants;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
 /**
  * Created by user on 15/10/28.
@@ -11,21 +14,10 @@ import java.awt.event.ActionListener;
 
 public class UserSettingsController implements AbstractController, ActionListener {
 
-    enum COMMAND{
-        START("Start");
-        private String command;
-        COMMAND(String command){
-            this.command = command;
-        }
-        public String getCommand() {
-            return command;
-        }
-    }
-
     private Component          mComponent;
     private AbstractController parentController;
     private JPanel  mUserSettingsPanel = new JPanel();
-    private JButton mStartButton       = new JButton(COMMAND.START.getCommand());
+    private JButton mStartButton       = new JButton(Constants.BUTTON_EVENT_START);
     private ActionListener listener;
 
     public UserSettingsController() {
@@ -35,8 +27,9 @@ public class UserSettingsController implements AbstractController, ActionListene
 
     private void initUI() {
         mUserSettingsPanel.add(mStartButton);
+        KeyBoardPress.addKeyboardAction(Constants.KEY_EVENT_LEFT, mUserSettingsPanel, KeyEvent.VK_LEFT);
         mStartButton.addActionListener(this);
-        mStartButton.setActionCommand(COMMAND.START.getCommand());
+        mStartButton.setActionCommand(Constants.BUTTON_EVENT_START);
     }
 
     public void addActionListener(ActionListener listener) {
@@ -60,7 +53,9 @@ public class UserSettingsController implements AbstractController, ActionListene
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        if (actionEvent.getActionCommand().equals("Start")){
+        String command = actionEvent.getActionCommand();
+        if (command.equals(Constants.BUTTON_EVENT_START) ||
+            command.equals(Constants.BUTTON_EVENT_STOP)) {
             listener.actionPerformed(actionEvent);
         }
     }

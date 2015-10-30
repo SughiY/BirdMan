@@ -12,27 +12,24 @@ import java.util.HashMap;
 
 public class KeyBoardPress {
 
-    private JComponent component;
-    private HashMap<String, ActionListener> observers = new HashMap<String, ActionListener>();
-    private HashMap<String, ActionMap>      observersAction= new HashMap<String, ActionMap>();
-    private HashMap<String, JComponent>     clients   = new HashMap<String, JComponent>();
-    private HashMap<String, InputMap>       clientsInput   = new HashMap<String, InputMap>();
+    static private HashMap<String, ActionMap>      observersAction= new HashMap<String, ActionMap>();
+//    static private HashMap<String, JComponent>     clients   = new HashMap<String, JComponent>();
+    static private HashMap<String, InputMap>       clientsInput   = new HashMap<String, InputMap>();
 
-
-    public void addKeyboardAction(String key, JComponent component, final int keyEvent){
-        clients.put(key, component);
-        InputMap                        im        = component.getInputMap(JComponent.WHEN_FOCUSED);
+    static public void addKeyboardAction(String key, JPanel component, final int keyEvent){
+//        clients.put(key, component);
+        InputMap  im = component.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        ActionMap am = component.getActionMap();
         im.put(KeyStroke.getKeyStroke(keyEvent, 0), key);
         clientsInput.put(key, im);
+        observersAction.put(key, am);
     }
 
-//    public void registerAsObserver(String key, ActionListener listener, AbstractAction action){
-//        observers.put(key, listener);
-//        ActionMap am =
-//    }
-
-    public KeyBoardPress(JComponent component) {
-        this.component = component;
-
+    static public void registerAsObserver(String key, AbstractAction action){;
+        ActionMap am = observersAction.get(key);
+        if (am != null){
+            am.put(key, action);
+        }
     }
+
 }

@@ -18,6 +18,11 @@ public class Constants {
     public static final int SPRITE_SELECTOR_SCROLL_WIDTH  = 500;
     public static final int SPRITE_SELECTOR_SCROLL_HEIGHT = 300;
     public static final int DEFAULT_DELAY                 = 20;
+
+    public static final String IMAGE_PATH_GHOST   = "images/ghost.png";
+    public static final String KEY_EVENT_LEFT     = "KEY_LEFT";
+    public static final String BUTTON_EVENT_STOP  = "BUTTON_STOP";
+    public static final String BUTTON_EVENT_START = "BUTTON_START";
 }
 
 
