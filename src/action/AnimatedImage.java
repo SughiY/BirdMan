@@ -6,6 +6,11 @@ import view.ImageComponent;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.dnd.DnDConstants;
+import java.awt.dnd.DragGestureListener;
+import java.awt.dnd.DragSource;
+import java.awt.dnd.DragSourceListener;
 import java.awt.event.ActionEvent;
 import java.awt.image.ImageObserver;
 import java.awt.image.ImageProducer;
@@ -20,24 +25,32 @@ import java.util.concurrent.TimeUnit;
 
 public class AnimatedImage extends ImageComponent implements AnimationComponent {
 
-    private static ScheduledThreadPoolExecutor pool   = new ScheduledThreadPoolExecutor(6);
-    private        Timer                       mTimer = new Timer(Constants.DEFAULT_DELAY, this);
+    public static  DataFlavor                  dataFlavor = new DataFlavor(AnimatedImage.class, Constants.FLAVOR_DES_ANIMATION);
+    private static ScheduledThreadPoolExecutor pool       = new ScheduledThreadPoolExecutor(6);
+    private        Timer                       mTimer     = new Timer(Constants.DEFAULT_DELAY, this);
     private JPanel mContainer;
     private Change mCallback;
+    private Boolean    enableDrag = false;
+    private DragSource source     = new DragSource();
+    private DragGestureListener listener;
 
     public AnimatedImage(String path) {
         super(path);
+    }
+
+    public AnimatedImage(ImageIcon imageIcon) {
+        super(imageIcon);
     }
 
     //implement interface
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         final AnimatedImage that = this;
-                synchronized (that) {
-                    if (mCallback != null) {
-                        mCallback.perform(that);
-                    }
-                }
+        synchronized (that) {
+            if (mCallback != null) {
+                mCallback.perform(that);
+            }
+        }
     }
 
     @Override
@@ -70,6 +83,33 @@ public class AnimatedImage extends ImageComponent implements AnimationComponent 
         mContainer = container;
     }
 
+    /**
+     * used to calcul the distance between two components
+     *
+     * @param c another component
+     * @return distince from one's center to another's
+     */
+    public double distanceBetween(JComponent c) {
+        int    x          = getX(), cx = c.getX();
+        int    y          = getY(), cy = c.getY();
+        int    width      = getWidth(), cwidth = c.getWidth();
+        int    height     = getHeight(), cheight = c.getHeight();
+        double centerX    = x + width * 0.5, centerY = y + height * 0.5;
+        double centerXOfC = cx + cwidth * 0.5, centerYOfC = cy + cheight * 0.5;
+        return Math.sqrt(Math.pow(centerX - centerXOfC, 2) + Math.pow(centerY - centerYOfC, 2));
+    }
+
+    /**
+     * determine if one component is intersected with another vertically, used for receiving characters by boat.
+     *
+     * @param c another component
+     * @return true if two component is intersected vertically , vice versa
+     */
+    public boolean isIntersectedVerticallyWith(JComponent c) {
+        double distance = this.distanceBetween(c);
+        return (distance < this.getHeight() * 0.5 || distance < c.getHeight() * 0.5);
+    }
+
     // getter setter
     public JPanel getContainer() {
         return mContainer;
@@ -83,7 +123,15 @@ public class AnimatedImage extends ImageComponent implements AnimationComponent 
         mCallback = callback;
     }
 
-    public Timer getTimer() {
-        return mTimer;
+    public void setDragEnabled(Boolean enableDrag) {
+        this.enableDrag = enableDrag;
+        if (enableDrag) {
+            listener = new PanelDragMoveHandler(AnimatedImage.dataFlavor);
+            source.createDefaultDragGestureRecognizer(this, DnDConstants.ACTION_MOVE, listener);
+        } else {
+            if (source != null) {
+                source.removeDragSourceListener((DragSourceListener) listener);
+            }
+        }
     }
 }

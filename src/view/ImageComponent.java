@@ -20,9 +20,18 @@ public class ImageComponent extends JComponent {
             image = new ImageIcon(getClass().getClassLoader().getResource(path));
     }
 
+    public ImageComponent(ImageIcon image) {
+            this.image = image;
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(image.getImage(), 0, 0, getWidth(), getHeight(),null);
+    }
+
+    public void setImage(ImageIcon image) {
+        this.image = image;
+        repaint();
     }
 }

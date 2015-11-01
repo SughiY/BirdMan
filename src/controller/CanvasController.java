@@ -2,18 +2,26 @@ package controller;
 
 import action.AnimatedImage;
 import action.AnimationComponent;
+import action.AnimationDropHandler;
+import action.PanelDragMoveHandler;
 import main.Constants;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.dnd.DnDConstants;
+import java.awt.dnd.DragSource;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.Serializable;
 
 /**
  * Created by user on 15/10/28.
  */
-public class CanvasController implements AbstractController, ActionListener {
+public class CanvasController implements AbstractController, ActionListener, Serializable{
+
+    static final long serialVersionUID = 75443838583928L;
 
     private Component          mComponent;
     private AbstractController parentController;
@@ -36,6 +44,7 @@ public class CanvasController implements AbstractController, ActionListener {
         mCanvasPanel.setBorder(BorderFactory.createTitledBorder("Game Panel"));
         mCanvasPanel.setPreferredSize(new Dimension(560, 930));
 
+        new AnimationDropHandler(mCanvasPanel, AnimatedImage.dataFlavor);
         initGhost();
     }
 

@@ -1,5 +1,7 @@
 package controller;
 
+import action.AnimatedImage;
+import action.ListDragCopyHandler;
 import main.Constants;
 
 import javax.swing.*;
@@ -14,10 +16,15 @@ import java.awt.event.KeyEvent;
 
 public class UserSettingsController implements AbstractController, ActionListener {
 
+    private Object[] blocks = new Object[]{
+            new ImageIcon(getClass().getClassLoader().getResource("images/brick.png"))
+    };
+
     private Component          mComponent;
     private AbstractController parentController;
     private JPanel  mUserSettingsPanel = new JPanel();
-    private JButton mStartButton       = new JButton(Constants.BUTTON_EVENT_START);
+    private JButton mStartButton       = new JButton("Start");
+    private JList   dragList           = new JList(blocks);
     private ActionListener listener;
 
     public UserSettingsController() {
@@ -26,10 +33,21 @@ public class UserSettingsController implements AbstractController, ActionListene
     }
 
     private void initUI() {
-        mUserSettingsPanel.add(mStartButton);
         KeyBoardPress.addKeyboardAction(Constants.KEY_EVENT_LEFT, mUserSettingsPanel, KeyEvent.VK_LEFT);
         mStartButton.addActionListener(this);
         mStartButton.setActionCommand(Constants.BUTTON_EVENT_START);
+
+        //init dragList
+        dragList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        dragList.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+        dragList.setVisibleRowCount(1);
+        dragList.setTransferHandler(new ListDragCopyHandler(dragList, AnimatedImage.dataFlavor));
+        dragList.setDropMode(DropMode.USE_SELECTION);
+        dragList.setDragEnabled(true);
+
+
+        mUserSettingsPanel.add(mStartButton);
+        mUserSettingsPanel.add(dragList);
     }
 
     public void addActionListener(ActionListener listener) {
