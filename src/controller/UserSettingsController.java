@@ -34,6 +34,9 @@ public class UserSettingsController implements AbstractController, ActionListene
 
     private void initUI() {
         KeyBoardPress.addKeyboardAction(Constants.KEY_EVENT_LEFT, mUserSettingsPanel, KeyEvent.VK_LEFT);
+        KeyBoardPress.addKeyboardAction(Constants.KEY_EVENT_RIGHT, mUserSettingsPanel, KeyEvent.VK_RIGHT);
+        KeyBoardPress.addKeyboardAction(Constants.KEY_EVENT_A, mUserSettingsPanel, KeyEvent.VK_A);
+        KeyBoardPress.addKeyboardAction(Constants.KEY_EVENT_D, mUserSettingsPanel, KeyEvent.VK_D);
         mStartButton.addActionListener(this);
         mStartButton.setActionCommand(Constants.BUTTON_EVENT_START);
 

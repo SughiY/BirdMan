@@ -22,6 +22,9 @@ public class Constants {
     public static final String IMAGE_PATH_GHOST   = "images/ghost.png";
     public static final String IMAGE_PATH_BRICK   = "images/brick.png";
     public static final String KEY_EVENT_LEFT     = "KEY_LEFT";
+    public static final String KEY_EVENT_RIGHT     = "KEY_RIGHT";
+    public static final String KEY_EVENT_A     = "KEY_A";
+    public static final String KEY_EVENT_D     = "KEY_S";
     public static final String BUTTON_EVENT_STOP  = "BUTTON_STOP";
     public static final String BUTTON_EVENT_START = "BUTTON_START";
 
