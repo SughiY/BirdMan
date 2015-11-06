@@ -45,10 +45,9 @@ public class AnimatedImage extends ImageComponent implements AnimationComponent 
     //implement interface
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        final AnimatedImage that = this;
-        synchronized (that) {
+        synchronized (this) {
             if (mCallback != null) {
-                mCallback.perform(that);
+                mCallback.perform(this);
             }
         }
     }

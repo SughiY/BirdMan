@@ -1,9 +1,6 @@
 package controller;
 
-import action.AnimatedImage;
-import action.AnimationComponent;
-import action.AnimationDropHandler;
-import action.PanelDragMoveHandler;
+import action.*;
 import main.Constants;
 
 import javax.swing.*;
@@ -25,10 +22,11 @@ public class CanvasController implements AbstractController, ActionListener, Ser
 
     private Component          mComponent;
     private AbstractController parentController;
-    private JPanel        mCanvasPanel = new JPanel();
+    private JPanel        mCanvasPanel  = new JPanel();
+    private AnimatedLabel animatedLabel = new AnimatedLabel("0 s");
 
-    private AnimatedImage ghost        = new AnimatedImage(Constants.IMAGE_PATH_GHOST);
-    private AnimatedImage ghost2        = new AnimatedImage(Constants.IMAGE_PATH_GHOST);
+    private AnimatedImage ghost  = new AnimatedImage(Constants.IMAGE_PATH_GHOST);
+    private AnimatedImage ghost2 = new AnimatedImage(Constants.IMAGE_PATH_GHOST);
 
     public CanvasController() {
         mComponent = mCanvasPanel;
@@ -43,6 +41,21 @@ public class CanvasController implements AbstractController, ActionListener, Ser
         mCanvasPanel.setLayout(null);
         mCanvasPanel.setBorder(BorderFactory.createTitledBorder("Game Panel"));
         mCanvasPanel.setPreferredSize(new Dimension(560, 930));
+
+        animatedLabel.setAnimation(new AnimationComponent.Change() {
+            @Override
+            public void perform(JComponent c) {
+                JLabel l = (JLabel) c;
+                if (l != null) {
+                    String[] time = l.getText().split(" ");
+                    int time0 = Integer.parseInt(time[0]);
+                    ++time0;
+                    l.setText(Integer.toString(time0) + " s");
+                }
+            }
+        });
+        animatedLabel.setBounds(400,20, 40, 25);
+        animatedLabel.addToContainer(mCanvasPanel);
 
         new AnimationDropHandler(mCanvasPanel, AnimatedImage.dataFlavor);
         initGhost();
@@ -102,6 +115,7 @@ public class CanvasController implements AbstractController, ActionListener, Ser
     public void actionPerformed(ActionEvent actionEvent) {
         String command = actionEvent.getActionCommand();
         if (command.equals(Constants.BUTTON_EVENT_START)) {
+            animatedLabel.startAnimation(1000);
             ghost.startAnimation(20);
             ghost2.startAnimation(20);
         } else if (command.equals(Constants.BUTTON_EVENT_STOP)) {

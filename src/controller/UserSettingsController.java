@@ -1,6 +1,8 @@
 package controller;
 
 import action.AnimatedImage;
+import action.AnimatedLabel;
+import action.AnimationComponent;
 import action.ListDragCopyHandler;
 import main.Constants;
 
@@ -22,9 +24,9 @@ public class UserSettingsController implements AbstractController, ActionListene
 
     private Component          mComponent;
     private AbstractController parentController;
-    private JPanel  mUserSettingsPanel = new JPanel();
-    private JButton mStartButton       = new JButton("Start");
-    private JList   dragList           = new JList(blocks);
+    private JPanel        mUserSettingsPanel = new JPanel();
+    private JButton       mStartButton       = new JButton("Start");
+    private JList         dragList           = new JList(blocks);
     private ActionListener listener;
 
     public UserSettingsController() {
@@ -34,6 +36,7 @@ public class UserSettingsController implements AbstractController, ActionListene
 
     private void initUI() {
         KeyBoardPress.addKeyboardAction(Constants.KEY_EVENT_LEFT, mUserSettingsPanel, KeyEvent.VK_LEFT);
+
         mStartButton.addActionListener(this);
         mStartButton.setActionCommand(Constants.BUTTON_EVENT_START);
 
@@ -44,6 +47,7 @@ public class UserSettingsController implements AbstractController, ActionListene
         dragList.setTransferHandler(new ListDragCopyHandler(dragList, AnimatedImage.dataFlavor));
         dragList.setDropMode(DropMode.USE_SELECTION);
         dragList.setDragEnabled(true);
+
 
 
         mUserSettingsPanel.add(mStartButton);
