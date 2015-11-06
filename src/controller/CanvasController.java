@@ -75,7 +75,31 @@ public class CanvasController implements AbstractController, ActionListener, Ser
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 int x = ghost.getX(), y = ghost.getY();
-                ghost.setLocation(x - 1, y);
+                ghost.setLocation(x - 10, y);
+            }
+        });
+
+        KeyBoardPress.registerAsObserver(Constants.KEY_EVENT_RIGHT, new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                int x = ghost.getX(), y = ghost.getY();
+                ghost.setLocation(x + 10, y);
+            }
+        });
+
+        KeyBoardPress.registerAsObserver(Constants.KEY_EVENT_A, new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                int x = ghost2.getX(), y = ghost.getY();
+                ghost2.setLocation(x - 10, y);
+            }
+        });
+
+        KeyBoardPress.registerAsObserver(Constants.KEY_EVENT_D, new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                int x = ghost2.getX(), y = ghost.getY();
+                ghost2.setLocation(x + 10, y);
             }
         });
 
