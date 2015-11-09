@@ -19,7 +19,7 @@ public interface AnimationComponent extends ActionListener{
     public void startAnimation(int delay);
     public void stopAnimation();
     public void reStartAnimation();
-
+    public double distanceBetween(JComponent c);
     /**
      * @description should always use this method to add to its container.
      */

@@ -30,6 +30,15 @@ public class AnimatedLabel extends JLabel implements AnimationComponent {
     public void stopAnimation() {
         mTimer.stop();
     }
+    ;
+    public void resetLabel(){
+        setText("0 s");
+    }
+
+    @Override
+    public double distanceBetween(JComponent c) {
+        return 0;
+    }
 
     @Override
     public void reStartAnimation() {
