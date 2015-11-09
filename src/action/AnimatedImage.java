@@ -1,6 +1,6 @@
 package action;
 
-//import com.sun.tools.internal.jxc.ap.Const;
+
 import main.Constants;
 import view.ImageComponent;
 
@@ -21,17 +21,18 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Created by user on 15/10/28.
- * canvas 界面元素设置
  */
 
 public class AnimatedImage extends ImageComponent implements AnimationComponent {
 
-    public static  DataFlavor dataFlavor = new DataFlavor(AnimatedImage.class, Constants.FLAVOR_DES_ANIMATION);
+
+    public static  DataFlavor                  dataFlavor = new DataFlavor(AnimatedImage.class, Constants.FLAVOR_DES_ANIMATION);
     private static ScheduledThreadPoolExecutor pool       = new ScheduledThreadPoolExecutor(6);
-    private Timer mTimer = new Timer(Constants.DEFAULT_DELAY, this);
+    private        Timer                       mTimer     = new Timer(Constants.DEFAULT_DELAY, this);
     private JPanel mContainer;
     private Change mCallback;
-    private Boolean enableDrag = false;
+    private Boolean    enableDrag = false;
+
     private DragSource source     = new DragSource();
     private DragGestureListener listener;
 
@@ -46,10 +47,10 @@ public class AnimatedImage extends ImageComponent implements AnimationComponent 
     //implement interface
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        final AnimatedImage that = this;
-        synchronized (that) {
+
+        synchronized (this) {
             if (mCallback != null) {
-                mCallback.perform(that);
+                mCallback.perform(this);
             }
         }
     }

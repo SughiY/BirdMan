@@ -33,8 +33,6 @@ public class AnimationDropHandler extends DropTargetAdapter {
         this.dataFlover  = dataFlover;
     }
 
-
-    
     @Override
     public void drop(DropTargetDropEvent event) {
         try {
@@ -69,7 +67,7 @@ public class AnimationDropHandler extends DropTargetAdapter {
             event.rejectDrop();
         }
     }
-    
+
     public void setLocal(int brkX, int brkY){
     	System.out.println("in " + brickX + " " + brickY);
     	

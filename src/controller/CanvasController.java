@@ -3,11 +3,12 @@ package controller;
 import action.AnimatedImage;
 import action.AnimationComponent;
 import action.AnimationDropHandler;
-import action.DragImage;
+//import action.DragImage;
 import action.PanelDragMoveHandler;
 import main.Constants;
 
 import javax.swing.*;
+
 
 import java.awt.*;
 import java.awt.datatransfer.DataFlavor;
@@ -20,7 +21,6 @@ import java.io.Serializable;
 
 /**
  * Created by user on 15/10/28.
- * ”“±ﬂ”Œœ∑ΩÁ√Ê
  */
 public class CanvasController implements AbstractController, ActionListener, Serializable{
 
@@ -52,6 +52,21 @@ public class CanvasController implements AbstractController, ActionListener, Ser
         mCanvasPanel.setBorder(BorderFactory.createTitledBorder("Game Panel"));
         mCanvasPanel.setPreferredSize(new Dimension(560, 930));
 
+//        animatedLabel.setAnimation(new AnimationComponent.Change() {
+//            @Override
+//            public void perform(JComponent c) {
+//                JLabel l = (JLabel) c;
+//                if (l != null) {
+//                    String[] time = l.getText().split(" ");
+//                    int time0 = Integer.parseInt(time[0]);
+//                    ++time0;
+//                    l.setText(Integer.toString(time0) + " s");
+//                }
+//            }
+//        });
+//        animatedLabel.setBounds(400,20, 40, 25);
+//        animatedLabel.addToContainer(mCanvasPanel);
+
         new AnimationDropHandler(mCanvasPanel, AnimatedImage.dataFlavor);
         initGhost();
     }
@@ -62,11 +77,7 @@ public class CanvasController implements AbstractController, ActionListener, Ser
         ghost.setSize(new Dimension(40, 40));
         ghost.addToContainer(mCanvasPanel);
 
-        //ghost2.setLocation(new Point(240, 20));
-        //ghost2.setSize(new Dimension(40, 40));
-        //ghost2.addToContainer(mCanvasPanel);
 
-        //press to left
         KeyBoardPress.registerAsObserver(Constants.KEY_EVENT_LEFT, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -100,6 +111,7 @@ public class CanvasController implements AbstractController, ActionListener, Ser
             }
         });
         
+
         ghost.setAnimation(new AnimationComponent.Change() {
             @Override
             public void perform(JComponent c) {
@@ -170,6 +182,7 @@ public class CanvasController implements AbstractController, ActionListener, Ser
 //        return (this == obj);
 //    }
     
+
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         String command = actionEvent.getActionCommand();
@@ -179,6 +192,7 @@ public class CanvasController implements AbstractController, ActionListener, Ser
         } else if (command.equals(Constants.BUTTON_EVENT_STOP)) {
             ghost.stopAnimation();
             //ghost2.stopAnimation();
+
         } else {
 
         }

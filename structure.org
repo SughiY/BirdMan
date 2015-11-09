@@ -2,7 +2,10 @@
 - SpriteModel implements Serializable 
   description : element in games 
 - Image 
+<<<<<<< HEAD
 - Audio
+=======
+>>>>>>> 1c37f74c9f7e9c2240bc889da99dc9574360394c
 
 ** view
 - global view

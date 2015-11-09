@@ -15,7 +15,7 @@ import java.awt.event.KeyEvent;
 
 /**
  * Created by user on 15/10/28.
- * user setting 
+ * user setting
  */
 
 public class UserSettingsController implements AbstractController, ActionListener {
@@ -28,7 +28,7 @@ public class UserSettingsController implements AbstractController, ActionListene
 
     private Component          mComponent;
     private AbstractController parentController;
-    
+
     //main panel
     private JPanel  mUserSettingsPanel = new JPanel();
     
@@ -83,7 +83,7 @@ public class UserSettingsController implements AbstractController, ActionListene
     }
 
     private void initUI() {
-    	
+
         KeyBoardPress.addKeyboardAction(Constants.KEY_EVENT_LEFT, mUserSettingsPanel, KeyEvent.VK_LEFT);
         KeyBoardPress.addKeyboardAction(Constants.KEY_EVENT_RIGHT, mUserSettingsPanel, KeyEvent.VK_RIGHT);
         KeyBoardPress.addKeyboardAction(Constants.KEY_EVENT_DOWN, mUserSettingsPanel, KeyEvent.VK_DOWN);
@@ -181,9 +181,7 @@ public class UserSettingsController implements AbstractController, ActionListene
         controlPanel.add(mStartButton);
         controlPanel.add(mStopButton);
         
-       
-       
-        
+
     }
 
     public void addActionListener(ActionListener listener) {
@@ -198,7 +196,6 @@ public class UserSettingsController implements AbstractController, ActionListene
     @Override
     public void addSubController(AbstractController controller) {
         mUserSettingsPanel.add(controller.getComponent());
-        
     }
 
     @Override
