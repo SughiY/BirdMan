@@ -20,6 +20,7 @@ public interface AnimationComponent extends ActionListener{
     public void stopAnimation();
     public void reStartAnimation();
     public double distanceBetween(JComponent c);
+    public boolean isIntersectedVerticallyWith(JComponent c);
     /**
      * @description should always use this method to add to its container.
      */

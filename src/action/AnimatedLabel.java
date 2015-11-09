@@ -41,6 +41,11 @@ public class AnimatedLabel extends JLabel implements AnimationComponent {
     }
 
     @Override
+    public boolean isIntersectedVerticallyWith(JComponent c) {
+        return false;
+    }
+
+    @Override
     public void reStartAnimation() {
         if (mTimer.isRunning()) {
             mTimer.restart();

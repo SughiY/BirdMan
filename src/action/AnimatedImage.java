@@ -108,8 +108,19 @@ public class AnimatedImage extends ImageComponent implements AnimationComponent 
      * @return true if two component is intersected vertically , vice versa
      */
     public boolean isIntersectedVerticallyWith(JComponent c) {
-        double distance = this.distanceBetween(c);
-        return (distance < this.getHeight() * 0.5 || distance < c.getHeight() * 0.5);
+        int    x          = getX(), cx = c.getX();
+        int    y          = getY(), cy = c.getY();
+        int    width      = getWidth(), cwidth = c.getWidth();
+        int    height     = getHeight(), cheight = c.getHeight();
+        double centerX    = x + width * 0.5, centerY = y + height * 0.5;
+        double centerXOfC = cx + cwidth * 0.5, centerYOfC = cy + cheight * 0.5;
+        System.out.print("distancX:"); System.out.print(Math.abs(centerX - centerXOfC));
+        System.out.print("widthX:"); System.out.print(width*0.5);
+        System.out.print("widthC:"); System.out.println(cwidth*0.5);
+        System.out.print("distancY:"); System.out.print(Math.abs(centerY - centerYOfC));
+        System.out.print("heightX:"); System.out.print(height*0.5);
+        System.out.print("heightC:"); System.out.println(cheight*0.5);
+        return ( (Math.abs(centerX - centerXOfC) - cwidth * 0.5) <= width*0.5 ) && ((Math.abs(centerY - centerYOfC) - cheight*0.5) <= height*0.5 );
     }
 
     // getter setter

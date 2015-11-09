@@ -1,10 +1,8 @@
 package controller;
 
-import action.AnimatedImage;
-import action.AnimationComponent;
-import action.AnimationDropHandler;
+import action.*;
 //import action.DragImage;
-import action.PanelDragMoveHandler;
+import com.apple.laf.AquaInternalFrameManager;
 import main.Constants;
 
 import javax.swing.*;
@@ -18,6 +16,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Created by user on 15/10/28.
@@ -28,16 +27,17 @@ public class CanvasController implements AbstractController, ActionListener, Ser
 
     private Component          mComponent;
     private AbstractController parentController;
-    private JPanel        mCanvasPanel = new JPanel();
+    private JPanel mCanvasPanel = new JPanel();
     private DataFlavor dataFlover;
 
-    private AnimatedImage ghost        = new AnimatedImage(Constants.IMAGE_PATH_GHOST);
-   // private AnimatedImage ghost2        = new AnimatedImage(Constants.IMAGE_PATH_GHOST);
-    private AnimatedImage brick        = new AnimatedImage(Constants.IMAGE_PATH_BRICK);
-    private AnimationDropHandler adh = new AnimationDropHandler(mCanvasPanel, dataFlover);
+    private AnimatedImage                 ghost         = new AnimatedImage(Constants.IMAGE_PATH_GHOST);
+    // private AnimatedImage ghost2        = new AnimatedImage(Constants.IMAGE_PATH_GHOST);
+    private AnimatedImage                 brick         = new AnimatedImage(Constants.IMAGE_PATH_BRICK);
+    private ArrayList<AnimationComponent> componentList = new ArrayList<AnimationComponent>();
+    private AnimatedLabel                 animatedLabel = new AnimatedLabel("0 s");
     //private UserSettingsController usc = new UserSettingsController();
     private int bx, by;
-    
+
     public CanvasController() {
         mComponent = mCanvasPanel;
         initUI();
@@ -52,23 +52,31 @@ public class CanvasController implements AbstractController, ActionListener, Ser
         mCanvasPanel.setBorder(BorderFactory.createTitledBorder("Game Panel"));
         mCanvasPanel.setPreferredSize(new Dimension(560, 930));
 
-//        animatedLabel.setAnimation(new AnimationComponent.Change() {
-//            @Override
-//            public void perform(JComponent c) {
-//                JLabel l = (JLabel) c;
-//                if (l != null) {
-//                    String[] time = l.getText().split(" ");
-//                    int time0 = Integer.parseInt(time[0]);
-//                    ++time0;
-//                    l.setText(Integer.toString(time0) + " s");
-//                }
-//            }
-//        });
-//        animatedLabel.setBounds(400,20, 40, 25);
-//        animatedLabel.addToContainer(mCanvasPanel);
+        animatedLabel.setAnimation(new AnimationComponent.Change() {
+            @Override
+            public void perform(JComponent c) {
+                JLabel l = (JLabel) c;
+                if (l != null) {
+                    String[] time = l.getText().split(" ");
+                    int time0 = Integer.parseInt(time[0]);
+                    ++time0;
+                    l.setText(Integer.toString(time0) + " s");
 
-        new AnimationDropHandler(mCanvasPanel, AnimatedImage.dataFlavor);
+                }
+            }
+        });
+        animatedLabel.setBounds(400, 20, 40, 25);
+        animatedLabel.addToContainer(mCanvasPanel);
+
+        new AnimationDropHandler(mCanvasPanel, AnimatedImage.dataFlavor, this);
         initGhost();
+    }
+
+    private void testLogic(){
+        for (AnimationComponent e:componentList) {
+            System.out.print("isTouched");
+            System.out.println(e.isIntersectedVerticallyWith(ghost));
+        }
     }
 
     private void initGhost(){
@@ -84,7 +92,6 @@ public class CanvasController implements AbstractController, ActionListener, Ser
                 int x = ghost.getX(), y = ghost.getY();
                 //int r = Integer.valueOf(usc.windSpeed.getText()).intValue();
                 ghost.setLocation(x - 10, y);
-                System.out.println(adh.getBrickX());
             }
         });
 
@@ -94,7 +101,6 @@ public class CanvasController implements AbstractController, ActionListener, Ser
             public void actionPerformed(ActionEvent actionEvent) {
                 int x = ghost.getX(), y = ghost.getY();
                 ghost.setLocation(x + 10, y);
-                System.out.println(adh.getBrickY());
                 //System.out.println(by);
                 
             }
@@ -105,7 +111,6 @@ public class CanvasController implements AbstractController, ActionListener, Ser
             public void actionPerformed(ActionEvent actionEvent) {
                 int x = ghost.getX(), y = ghost.getY();
                 ghost.setLocation(x, y+5);
-                System.out.println(adh.getBrickY());
                 //System.out.println(by);
                 
             }
@@ -125,6 +130,7 @@ public class CanvasController implements AbstractController, ActionListener, Ser
                 	//JOptionPane.showConfirmDialog(null, "choose one", "choose one", JOptionPane.YES_NO_OPTION);
                 	ghost.stopAnimation();
                 }
+                testLogic();
                 //comprisonLocation(ghost, brick);
             }
         });
@@ -136,6 +142,10 @@ public class CanvasController implements AbstractController, ActionListener, Ser
 //                c.setLocation(x, y + 1);
 //            }
 //        });
+    }
+
+    public void addCompoenetToList(AnimationComponent a){
+        componentList.add(a);
     }
 
     @Override
@@ -181,17 +191,19 @@ public class CanvasController implements AbstractController, ActionListener, Ser
 //    public boolean equals(Object obj) {
 //        return (this == obj);
 //    }
-    
+
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         String command = actionEvent.getActionCommand();
         if (command.equals(Constants.BUTTON_EVENT_START)) {
             ghost.startAnimation(20);
+            animatedLabel.startAnimation(1000);
             //ghost2.startAnimation(20);
         } else if (command.equals(Constants.BUTTON_EVENT_STOP)) {
             ghost.stopAnimation();
-            //ghost2.stopAnimation();
+            animatedLabel.stopAnimation();
+            animatedLabel.resetLabel();
 
         } else {
 

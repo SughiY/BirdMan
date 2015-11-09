@@ -20,17 +20,19 @@ public class AnimationDropHandler extends DropTargetAdapter {
     private DropTarget dropTarget;
     private final JPanel canvasPanel;
     private DataFlavor dataFlover;
+    private CanvasController canvasController;
     public int brickX, brickY;
 
     //private CanvasController cc = new CanvasController();
     
 
     // drop target listener for drag and drop functionality
-    public AnimationDropHandler(JPanel canvasPanel, DataFlavor dataFlover) {
+    public AnimationDropHandler(JPanel canvasPanel, DataFlavor dataFlover, CanvasController canvasController) {
         this.canvasPanel = canvasPanel;
         this.dropTarget  = new DropTarget(canvasPanel, DnDConstants.ACTION_COPY, this, true, null);
         ;
         this.dataFlover  = dataFlover;
+        this.canvasController = canvasController;
     }
 
     @Override
@@ -41,6 +43,7 @@ public class AnimationDropHandler extends DropTargetAdapter {
                 AnimatedImage image = (AnimatedImage) tr.getTransferData(dataFlover);
                 image.setDragEnabled(true);
                 image.addToContainer(canvasPanel);
+                canvasController.addCompoenetToList(image);
                 image.setLocation(event.getLocation());
                 brickX= event.getLocation().x;
                 System.out.println(brickX);
