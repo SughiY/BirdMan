@@ -35,7 +35,7 @@ public class CanvasController implements AbstractController, ActionListener, Ser
     private AnimatedImage                 brick         = new AnimatedImage(Constants.IMAGE_PATH_BRICK);
     private ArrayList<AnimationComponent> componentList = new ArrayList<AnimationComponent>();
     private AnimatedLabel                 animatedLabel = new AnimatedLabel("0 s");
-    //private UserSettingsController usc = new UserSettingsController();
+    private UserSettingsController usc ;
     private int bx, by;
 
     public CanvasController() {
@@ -90,8 +90,8 @@ public class CanvasController implements AbstractController, ActionListener, Ser
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 int x = ghost.getX(), y = ghost.getY();
-                //int r = Integer.valueOf(usc.windSpeed.getText()).intValue();
-                ghost.setLocation(x - 10, y);
+                int r = Integer.valueOf(usc.windSpeed.getText()).intValue();
+                ghost.setLocation(x - r, y);
             }
         });
 
@@ -100,7 +100,8 @@ public class CanvasController implements AbstractController, ActionListener, Ser
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 int x = ghost.getX(), y = ghost.getY();
-                ghost.setLocation(x + 10, y);
+                int r = Integer.valueOf(usc.windSpeed.getText()).intValue();
+                ghost.setLocation(x + r, y);
                 //System.out.println(by);
                 
             }
@@ -142,6 +143,10 @@ public class CanvasController implements AbstractController, ActionListener, Ser
 //                c.setLocation(x, y + 1);
 //            }
 //        });
+    }
+
+    public void setUsc(UserSettingsController usc) {
+        this.usc = usc;
     }
 
     public void addCompoenetToList(AnimationComponent a){

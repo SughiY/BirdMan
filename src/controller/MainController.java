@@ -28,6 +28,7 @@ public class MainController implements AbstractController {
         mFrame.setSize(Constants.FRAME_WIDTH, Constants.FRAME_HEIGHT);
         addSubController(userSettingsController);
         addSubController(canvasController);
+        canvasController.setUsc(userSettingsController);
         userSettingsController.addActionListener(canvasController);
     }
 
